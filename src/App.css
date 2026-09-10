@@ -6,12 +6,35 @@
     env(safe-area-inset-left);
 }
 
-.stage {
+/* ---------- Game ---------- */
+
+.game {
   flex: 1 1 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
   padding: 0.75rem 0 0.25rem;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem 0.5rem;
+}
+
+.game-score {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #f8fafc;
+  font-variant-numeric: tabular-nums;
+}
+
+.game-time {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
 }
 
 .staff-card {
@@ -77,4 +100,253 @@
   border-color: #f87171;
   color: #fee2e2;
   opacity: 0.85;
+}
+
+/* ---------- Time bar ---------- */
+
+.timebar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: #1e293b;
+  z-index: 20;
+}
+
+.timebar-fill {
+  height: 100%;
+  background: #38bdf8;
+  transition:
+    width 0.1s linear,
+    background 0.3s ease;
+}
+
+.timebar-fill.is-low {
+  background: #f87171;
+}
+
+/* ---------- Home & Results ---------- */
+
+.home,
+.results {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.home-main,
+.results-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  margin-top: 6vh;
+}
+
+.home-title {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+.home-tagline {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+  color: #94a3b8;
+}
+
+.home-form {
+  display: flex;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.home-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  font-size: 1.05rem;
+  color: #f8fafc;
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 14px;
+  outline: none;
+}
+
+.home-input:focus {
+  border-color: #38bdf8;
+}
+
+.home-input::placeholder {
+  color: #64748b;
+}
+
+.home-go {
+  padding: 0.85rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #04283a;
+  background: #38bdf8;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    transform 0.08s ease,
+    opacity 0.12s ease;
+}
+
+.home-go:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.home-go:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.results-label {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.results-score {
+  margin: 0;
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #f8fafc;
+  font-variant-numeric: tabular-nums;
+}
+
+.results-unit {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #94a3b8;
+}
+
+.results-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* ---------- Leaderboard ---------- */
+
+.board-section {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.board-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.board {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.board-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+}
+
+.board-row.is-you {
+  border-color: #38bdf8;
+  background: #0c4a6e;
+}
+
+.board-rank {
+  width: 1.5rem;
+  text-align: right;
+  font-weight: 700;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+.board-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.board-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.board-time {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.board-you {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #04283a;
+  background: #38bdf8;
+  border-radius: 999px;
+}
+
+.board-score {
+  font-weight: 800;
+  color: #f8fafc;
+  font-variant-numeric: tabular-nums;
+}
+
+.board-empty {
+  margin: 0;
+  padding: 0.9rem;
+  color: #64748b;
+  background: #1e293b;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.link-button {
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: #38bdf8;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
 }
