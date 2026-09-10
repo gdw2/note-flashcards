@@ -1,0 +1,80 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+.stage {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0 0.25rem;
+}
+
+.staff-card {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  margin: 0 0.75rem;
+  background: #f8fafc;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.staff {
+  position: absolute;
+  inset: 0;
+}
+
+.staff svg {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.footer {
+  padding: 0.75rem 1rem calc(1rem + env(safe-area-inset-bottom));
+}
+
+.choices {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.choice {
+  flex: 1;
+  min-height: 72px;
+  border: 2px solid #334155;
+  border-radius: 14px;
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease,
+    transform 0.08s ease,
+    opacity 0.12s ease;
+}
+
+.choice:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.choice.is-wrong {
+  background: #7f1d1d;
+  border-color: #f87171;
+  color: #fee2e2;
+  opacity: 0.85;
+}

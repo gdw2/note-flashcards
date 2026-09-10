@@ -1,0 +1,36 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #0f172a;
+  color: #e2e8f0;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  touch-action: manipulation;
+}
