@@ -43,6 +43,26 @@ If you already have a suitable Node.js (22+) installed, you can skip devbox and 
 | `npm run build` | Type-check and build for production |
 | `npm run preview` | Preview the production build |
 | `npm run typecheck` | Run the TypeScript compiler with no emit |
+| `npm run deploy` | Build and deploy to Cloudflare Workers |
+| `npm run cf-preview` | Build and preview the Worker locally |
+
+## Deployment
+
+The app is hosted on Cloudflare Workers as an assets-only site (no Worker script), so requests to static assets are free and unlimited. Configuration lives in `wrangler.jsonc`:
+
+- `assets.directory` points at the Vite build output (`./dist`).
+- `assets.not_found_handling = "single-page-application"` serves `index.html` for unknown navigation requests.
+- `routes` binds the `flashcards.gdw2.com` custom domain.
+
+To deploy manually:
+
+```bash
+devbox run -- npm install
+devbox run -- npx wrangler login   # one-time, opens a browser
+devbox run -- npm run deploy
+```
+
+The site is then available at https://flashcards.gdw2.com (and at the `*.workers.dev` URL). `wrangler login` stores credentials in your user config; subsequent deploys only need `npm run deploy`.
 
 ## Project structure
 
