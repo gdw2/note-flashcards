@@ -53,8 +53,11 @@ function shuffle<T>(items: T[]): T[] {
   return copy
 }
 
-export function makeQuestion(): Question {
-  const note = randomOf(ALL_NOTES)
+export function makeQuestion(previous?: Note): Question {
+  const pool = previous
+    ? ALL_NOTES.filter((note) => noteToKey(note) !== noteToKey(previous))
+    : ALL_NOTES
+  const note = randomOf(pool)
   const correct = note.letter
   const distractors = shuffle(LETTERS.filter((letter) => letter !== correct)).slice(0, 2)
   const choices = shuffle([correct, ...distractors])

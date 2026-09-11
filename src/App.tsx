@@ -109,7 +109,7 @@ export default function App() {
     setScore(0)
     setAttempts(0)
     setWrongGuesses([])
-    setQuestion(makeQuestion())
+    setQuestion((prev) => makeQuestion(prev.note))
     setRemainingMs(GAME_DURATION_MS)
     setSubmitStatus('submitting')
     submittedRef.current = false
@@ -127,7 +127,7 @@ export default function App() {
         celebrate()
         setScore((value) => value + 1)
         setWrongGuesses([])
-        setQuestion(makeQuestion())
+        setQuestion((prev) => makeQuestion(prev.note))
         return
       }
       setWrongGuesses((prev) =>
