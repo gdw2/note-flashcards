@@ -1,6 +1,7 @@
 export interface LeaderboardEntry {
   name: string
   score: number
+  accuracy: number | null
   created_at: string
 }
 
@@ -20,11 +21,12 @@ export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
 export async function submitScore(
   name: string,
   score: number,
+  accuracy: number,
 ): Promise<LeaderboardEntry[]> {
   const response = await fetch('/api/scores', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ name, score }),
+    body: JSON.stringify({ name, score, accuracy }),
   })
   if (!response.ok) {
     throw new Error(`Failed to submit score (${response.status})`)

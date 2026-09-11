@@ -66,7 +66,7 @@ The Worker in `worker/index.ts` serves the SPA assets and exposes a small JSON A
 | Method | Path | Description |
 | --- | --- | --- |
 | `GET` | `/api/leaderboard` | Top 10 scores, highest first |
-| `POST` | `/api/scores` | Submit `{ name, score }`, returns the updated leaderboard |
+| `POST` | `/api/scores` | Submit `{ name, score, accuracy }`, returns the updated leaderboard |
 
 Scores are stored in a D1 (SQLite) database. The schema lives in `migrations/`:
 
@@ -75,11 +75,14 @@ CREATE TABLE scores (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   score INTEGER NOT NULL,
+  accuracy INTEGER,                                  -- added in 0002; null for legacy rows
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 ```
 
-Input is validated server-side (name trimmed to 20 characters, score an integer between 0 and 500). Note that the score is reported by the client, so this is suitable for casual play rather than competitive integrity.
+Accuracy is the percentage of taps that were correct (`correct / attempts`). Rows without a recorded accuracy are displayed as `100%`.
+
+Input is validated server-side (name trimmed to 20 characters, score an integer between 0 and 500, accuracy an integer between 0 and 100 or omitted). Note that the score and accuracy are reported by the client, so this is suitable for casual play rather than competitive integrity.
 
 Apply migrations:
 

@@ -37,6 +37,7 @@ export default function App() {
   const [question, setQuestion] = useState<Question>(() => makeQuestion())
   const [wrongGuesses, setWrongGuesses] = useState<Letter[]>([])
   const [score, setScore] = useState(0)
+  const [attempts, setAttempts] = useState(0)
   const [remainingMs, setRemainingMs] = useState(GAME_DURATION_MS)
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
@@ -85,14 +86,15 @@ export default function App() {
   }, [screen])
 
   const submit = useCallback(() => {
+    const accuracy = attempts === 0 ? 100 : Math.round((score / attempts) * 100)
     setSubmitStatus('submitting')
-    submitScore(playerName, score)
+    submitScore(playerName, score, accuracy)
       .then((entries) => {
         setLeaderboard(entries)
         setSubmitStatus('done')
       })
       .catch(() => setSubmitStatus('error'))
-  }, [playerName, score])
+  }, [playerName, score, attempts])
 
   useEffect(() => {
     if (screen !== 'results' || submittedRef.current) return
@@ -105,6 +107,7 @@ export default function App() {
     if (!name) return
     setPlayerName(name)
     setScore(0)
+    setAttempts(0)
     setWrongGuesses([])
     setQuestion(makeQuestion())
     setRemainingMs(GAME_DURATION_MS)
@@ -118,6 +121,7 @@ export default function App() {
   const handleSelect = useCallback(
     (letter: Letter) => {
       if (advancingRef.current) return
+      setAttempts((value) => value + 1)
       if (letter === question.correct) {
         advancingRef.current = true
         celebrate()

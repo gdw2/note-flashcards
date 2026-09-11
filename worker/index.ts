@@ -6,6 +6,7 @@ export interface Env {
 interface ScoreRow {
   name: string
   score: number
+  accuracy: number | null
   created_at: string
 }
 
@@ -32,7 +33,7 @@ function sanitizeName(input: unknown): string | null {
 async function topScores(db: D1Database): Promise<ScoreRow[]> {
   const { results } = await db
     .prepare(
-      'SELECT name, score, created_at FROM scores ORDER BY score DESC, created_at ASC LIMIT ?',
+      'SELECT name, score, accuracy, created_at FROM scores ORDER BY score DESC, created_at ASC LIMIT ?',
     )
     .bind(LEADERBOARD_SIZE)
     .all<ScoreRow>()
@@ -55,17 +56,33 @@ export default {
         return json({ error: 'invalid json' }, 400)
       }
 
-      const payload = body as { name?: unknown; score?: unknown }
+      const payload = body as {
+        name?: unknown
+        score?: unknown
+        accuracy?: unknown
+      }
       const name = sanitizeName(payload.name)
       const score = Number(payload.score)
+      const accuracy =
+        payload.accuracy === undefined || payload.accuracy === null
+          ? null
+          : Number(payload.accuracy)
 
       if (!name) return json({ error: 'invalid name' }, 400)
       if (!Number.isInteger(score) || score < 0 || score > MAX_SCORE) {
         return json({ error: 'invalid score' }, 400)
       }
+      if (
+        accuracy !== null &&
+        (!Number.isInteger(accuracy) || accuracy < 0 || accuracy > 100)
+      ) {
+        return json({ error: 'invalid accuracy' }, 400)
+      }
 
-      await env.DB.prepare('INSERT INTO scores (name, score) VALUES (?, ?)')
-        .bind(name, score)
+      await env.DB.prepare(
+        'INSERT INTO scores (name, score, accuracy) VALUES (?, ?, ?)',
+      )
+        .bind(name, score, accuracy)
         .run()
 
       return json({ leaderboard: await topScores(env.DB) }, 201)

@@ -38,7 +38,10 @@ export function Leaderboard({ entries, highlightName }: LeaderboardProps) {
                 {formatRelativeTime(entry.created_at)}
               </span>
             </span>
-            <span className="board-score">{entry.score}</span>
+            <span className="board-score-block">
+              <span className="board-score">{entry.score}</span>
+              <span className="board-accuracy">{entry.accuracy ?? 100}%</span>
+            </span>
           </li>
         )
       })}
